@@ -1,0 +1,72 @@
+const formulario = document.getElementById('formulario');
+const tabela = document.getElementById('tabelaRegistro');
+
+const registroLista = [];
+
+formulario.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  let nome = document.getElementById('inputNome').value.trim();
+  let data = document.getElementById('inputData').value.trim();
+
+  const [ano, mes, dia] = data.split('-');
+  data = `${dia}/${mes}/${ano}`;
+
+  if (!nome || !data) {
+    alert('Por favor informe nome/data!');
+    return;
+  }
+
+  if (verificaDuplicado(nome, data)) {
+    alert('dados duplicados nao sao aceitos');
+    return;
+  }
+
+  const novoRegistro = { inputNome: nome, inputData: data}
+  registroLista.push(novoRegistro)
+  atualizaTabela();
+  formulario.reset();
+});
+
+function excluirRegistro (index) {
+  registroLista.splice(index, 1); 
+  atualizaTabela(); 
+};
+
+function finalizarRegistro (index) {
+  registroLista[index].finalizado = true; 
+  atualizaTabela();
+};
+
+function atualizaTabela() {
+  tabela.innerHTML = `
+    <div>
+      <th>
+        Nome
+      </th>
+      <th>
+        Data
+      </th>
+      <th>
+        Acoes
+      </th>
+    </div>
+  `;
+  registroLista.forEach((item, index) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${item.inputNome}</td>
+      <td>${item.inputData}</td>
+      <td>
+        <button class="btn btn-success btn-sm" onclick="finalizarRegistro(${index})">finalizar</button>
+        <button class="btn btn-danger btn-sm" onclick="excluirRegistro(${index})">Excluir</button>
+      </td>
+    `;
+    item.finalizado ? tr.style.backgroundColor = 'green' : null;
+    tabela.appendChild(tr)
+  })
+}
+
+function verificaDuplicado(nome, data) {
+  return registroLista.some(registro =>  registro.inputNome.toLowerCase() == nome.toLowerCase() && data == registro.inputData)
+}

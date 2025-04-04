@@ -40,33 +40,33 @@ vetor.forEach((valor, i) =>{
 console.log(valor, i);
 })
 
-const vetor2 =[1,2,3,4,5,6]
-const vetorMap = vetor2.map((valor) => {
-    return valor + 1
-})
+// const vetor2 =[1,2,3,4,5,6]
+// const vetorMap = vetor2.map((valor) => {
+//     return valor + 1
+// })
 
-console.log(vetorMap);
+// console.log(vetorMap);
 
-const vetorfiltrado = vetor2.filter((valor) => {
-    if (valor % 2 == 0){
-        return valor
-    }
-})
+// const vetorfiltrado = vetor2.filter((valor) => {
+//     if (valor % 2 == 0){
+//         return valor
+//     }
+// })
 
-console.log(vetorfiltrado);
+// console.log(vetorfiltrado);
 
-const somaVetor = vetor2.reduce((a, valor) => a + valor)
+// const somaVetor = vetor2.reduce((a, valor) => a + valor)
 
-console.log(somaVetor);
+// console.log(somaVetor);
 
-//função que vai receber uma string, que naquela string, só as posições pares serão maiusculas
+// //função que vai receber uma string, que naquela string, só as posições pares serão maiusculas
 
-const nome = 'joaooooooo'
-const vetornome = nome.split('')
-vetornome.forEach((valor, i) =>{
-    if(i % 2 == 0){
-        vetornome[i] = valor.toUpperCase()
-    }
-})
+// const nome = 'joaooooooo'
+// const vetornome = nome.split('')
+// vetornome.forEach((valor, i) =>{
+//     if(i % 2 == 0){
+//         vetornome[i] = valor.toUpperCase()
+//     }
+// })
 
-console.log(vetornome.join(''));
+// console.log(vetornome.join(''));

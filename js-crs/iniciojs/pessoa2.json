@@ -1,0 +1,13 @@
+
+{ 
+    "nome": "joao",
+    "idade": "19",
+    "idioma": [
+        "portugues",
+        "ingles",
+        "japones"
+    ],
+    "endereço": {
+        "rua": "coiso"
+    }
+}
