@@ -1,12 +1,7 @@
 const formulario = document.getElementById('formulario');
 const tabela = document.getElementById('tabelaRegistro');
 const apagar = document.getElementById('botaoApagar');
-let checkbox = document.querySelector("input[name=checkbox]");
-
-
-const registroLista = [];
-
-
+let registroLista = JSON.parse(localStorage.getItem('registros')) || [];  
 
 formulario.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -33,6 +28,7 @@ formulario.addEventListener('submit', (event) => {
   const novoRegistro = {inputNome: nome, inputData: data, checkbox: fim}
   registroLista.push(novoRegistro)
   atualizaTabela();
+  salvarDados(); 
   formulario.reset();
 });
 
@@ -51,12 +47,11 @@ function atualizaTabela() {
       <div class="col border border-black">${item.inputNome}</div> 
       <div class="col border border-black">${item.inputData}</div>
       <div class="col border border-black">
-        <button type="button" onclick="fimTarefa(${index})">Apagar Tarefa</button>
-        <input type="checkbox" name="checkbox" onclick="finalizarTarefa(${index})">
-        <label for="fimTarefa">Encerrar tarefa</label>
+        <button type="button" onclick="excluirRegistro(${index})">Apagar Tarefa</button>
+        <button type="button" onclick="finalizarRegistro(${index})">Finalizar Tarefa</button>
     </div>
     `;
-    item.concluido ? tr.style.backgroundColor = 'green' : null;
+    item.finalizado ? tr.style.backgroundColor = 'green' : tr.style.backgroundColor = 'white';
     tabela.appendChild(tr)
   })
 }
@@ -66,14 +61,20 @@ function verificaDuplicado(nome, data) {
   return registroLista.some(registro =>  registro.inputNome.toLowerCase() == nome.toLowerCase() && data == registro.inputData)
 }
 
-botaoApagar.addEventListener('click', (event) =>{
-    event.preventDefault()
-})
+function salvarDados() {
+  localStorage.setItem('registros', JSON.stringify(registroLista));  
+}
 
-fimTarefa.addEventListener('change', (event) =>{
-    if(checkbox.checked){
-        tabela.style.backgroundColor = 'green'
-    }else{
-        tabela.style.backgroundColor = 'white'
-    }
-})
+window.excluirRegistro = function (index) {
+  registroLista.splice(index, 1); 
+  atualizaTabela();
+  salvarDados(); 
+};
+
+window.finalizarRegistro = function (index) {
+  registroLista[index].finalizado = true; 
+  atualizaTabela(); 
+  salvarDados();  
+};
+
+document.addEventListener('DOMContentLoaded', atualizaTabela);
